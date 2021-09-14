@@ -29,6 +29,15 @@ cnae_df = (
 (
     cnae_df
     .write
-    .format("parquet")
-    .save("gs://desafio-final-318823/staging/cnae/")
+    .format('bigquery')
+    .option("temporaryGcsBucket", "desafio-final-318823-stage-dataproc")
+    .option('table', 'modulo3.cnae')
+    .save()
 )
+
+# (
+#     cnae_df
+#     .write
+#     .format("parquet")
+#     .save("gs://desafio-final-318823/staging/cnae/")
+# )

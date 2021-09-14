@@ -5,12 +5,14 @@ spark = (
     SparkSession
     .builder
     .config("spark.serializer", "org.apache.spark.serializer.KryoSerializer")
+    .config("spark.debug.maxToStringFields", 200)
     .getOrCreate()
 )
 
 estabelecimentos_schema = StructType([
         StructField("CNPJ_BASICO", LongType()), 
         StructField("CNPJ_ORDEM", IntegerType()),
+        StructField("CNPJ_DV", ShortType()),
         StructField("IDENTIFICADOR_MATRIZ_FILIAL", ShortType()),
         StructField("NOME_FANTASIA", StringType()),
         StructField("SITUACAO_CADASTRAL", StringType()),
@@ -40,25 +42,41 @@ estabelecimentos_schema = StructType([
         StructField("DATA_DA_SITUACAO_ESPECIAL", StringType())])
 
 
+options_dict = {
+
+    'encoding': 'ISO-8859-1',
+    'sep': ';',
+    'escape': "\"",
+    'format': 'csv',
+    'header': 'false'
+}
+
 ## read data from raw
 estabelecimentos_df = (
 
     spark
     .read
-    .option("sep", ";")
-    .option("header", "false")
-    .option('encoding', 'latin1')
+    .options(**options_dict)
     .schema(estabelecimentos_schema)
     .csv("gs://desafio-final-318823/raw/estabelecimentos/")
     
 )
 
 
-## save data to parquet format
 (
     estabelecimentos_df
+    .repartition(200)
     .write
-    .partitionBy('MUNICIPIO')
-    .format("parquet")
-    .save("gs://desafio-final-318823/staging/estabelecimentos/")
+    .format('bigquery')
+    .option("temporaryGcsBucket", "desafio-final-318823-stage-dataproc")
+    .option('table', 'modulo3.estabelecimentos')
+    .save()
 )
+# ## save data to parquet format
+# (
+#     estabelecimentos_df
+#     .write
+#     .partitionBy('MUNICIPIO')
+#     .format("parquet")
+#     .save("gs://desafio-final-318823/staging/estabelecimentos/")
+# )

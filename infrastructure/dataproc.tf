@@ -45,10 +45,15 @@ resource "google_dataproc_cluster" "mycluster" {
       service_account_scopes = [
         "cloud-platform"
       ]
+      metadata = {
+          "bigquery-connector-version": "1.2.0",
+          "spark-bigquery-connector-version": "0.21.0"
+
+      }
     }
 
     initialization_action {
-      script      = "gs://dataproc-initialization-actions/stackdriver/stackdriver.sh"
+      script      = "gs://goog-dataproc-initialization-actions-${var.region}/connectors/connectors.sh"
       timeout_sec = 500
     }
 

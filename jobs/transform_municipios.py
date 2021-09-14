@@ -28,6 +28,8 @@ municipios_df = (
 (
     municipios_df
     .write
-    .format("parquet")
-    .save("gs://desafio-final-318823/staging/municipios/")
+    .format('bigquery')
+    .option("temporaryGcsBucket", "desafio-final-318823-stage-dataproc")
+    .option('table', 'modulo3.municipios')
+    .save()
 )
