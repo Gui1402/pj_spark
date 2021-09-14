@@ -1,0 +1,7 @@
+secrets/
+infrastructure/terraform*
+terraform.tfstate
+infrastructure/.terraform.lock.hcl
+infrastructure/.terraform/providers/registry.terraform.io/hashicorp/google/3.83.0/linux_amd64/terraform-provider-google_v3.83.0_x5
+infrastructure/.terraform/providers/registry.terraform.io/hashicorp/google-beta/3.83.0/linux_amd64/terraform-provider-google-beta_v3.83.0_x5
+infrastructure/.terraform/providers/registry.terraform.io/hashicorp/local/2.1.0/linux_amd64/terraform-provider-local_v2.1.0_x5
