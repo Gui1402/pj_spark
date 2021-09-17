@@ -68,15 +68,16 @@ estabelecimentos_df = (
     .repartition(200)
     .write
     .format('bigquery')
+    .mode("overwrite")
     .option("temporaryGcsBucket", "desafio-final-318823-stage-dataproc")
     .option('table', 'modulo3.estabelecimentos')
     .save()
 )
 # ## save data to parquet format
-# (
-#     estabelecimentos_df
-#     .write
-#     .partitionBy('MUNICIPIO')
-#     .format("parquet")
-#     .save("gs://desafio-final-318823/staging/estabelecimentos/")
-# )
+(
+    estabelecimentos_df
+    .write
+    .partitionBy('MUNICIPIO')
+    .format("parquet")
+    .save("gs://desafio-final-318823/staging/estabelecimentos/")
+)

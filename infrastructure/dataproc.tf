@@ -9,15 +9,18 @@ resource "google_dataproc_cluster" "mycluster" {
 
     master_config {
       num_instances = 1
-      machine_type  = "n1-standard-4"
+      machine_type  = "n1-standard-2"
       disk_config {
-        boot_disk_type    = "pd-ssd"
         boot_disk_size_gb = 250
       }
     }
 
     worker_config {
-      num_instances    = 0
+      num_instances    = 3
+      machine_type  = "n1-standard-2"
+      disk_config {
+        boot_disk_size_gb = 250
+      }
     }
 
     preemptible_worker_config {

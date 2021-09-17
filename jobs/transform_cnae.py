@@ -30,14 +30,15 @@ cnae_df = (
     cnae_df
     .write
     .format('bigquery')
+    .mode("overwrite")
     .option("temporaryGcsBucket", "desafio-final-318823-stage-dataproc")
     .option('table', 'modulo3.cnae')
     .save()
 )
 
-# (
-#     cnae_df
-#     .write
-#     .format("parquet")
-#     .save("gs://desafio-final-318823/staging/cnae/")
-# )
+(
+    cnae_df
+    .write
+    .format("parquet")
+    .save("gs://desafio-final-318823/staging/cnae/")
+)
