@@ -34,3 +34,10 @@ municipios_df = (
     .option('table', 'modulo3.municipios')
     .save()
 )
+
+(
+    cnae_df
+    .write
+    .format("parquet")
+    .save("gs://desafio-final-318823/staging/municipios/")
+)
